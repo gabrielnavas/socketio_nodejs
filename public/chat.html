@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            outline: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #FFF ;
+            color: #333;
+            font-family: sans-serif;
+            -webkit-font-smoothing: antialiased;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+        }
+
+        body, input, select, button {
+            font: 16px sans-serif;
+        }
+
+        aside {
+            color: #666;
+            font-size: 20px;
+            width: auto;
+            height: 100vh;
+            padding: 26px 2.5%;
+            border-right: solid 1px #CCC;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        aside i {
+            cursor: pointer;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        main img.profile-pic {
+            width: 35px;
+            height: 35px;
+            margin-left: 15px;
+            border-radius: 35px;
+        }
+
+        main header {
+            padding: 20px 30px;
+            border-bottom: solid 1px #CCC;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        main header h1 {
+            font-size: 22px;
+        }
+
+        main header div.badges {
+            display: flex;
+            align-items: center;
+        }
+
+        main header div.user {
+            margin-left: 25px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        main article {
+            padding: 20px 30px;
+            display: flex;
+            overflow: auto;
+            flex-direction: column;   
+            flex: 1;
+        }
+
+        main article div.date {
+            color: #666;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        main article div.messages {
+            width: 50%;
+            margin-bottom: 10px;
+            display: flex;
+            scroll-behavior: smooth;
+        }
+
+        main article div.message p {
+            background: #EEE;
+            padding: 10px 15px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+        }
+
+        main article div.messages.other p {
+            background: #EEE;
+            width: auto;
+            text-align: left;
+            border-bottom-left-radius: 0;
+        }
+
+        main article div.messages.other img.profile-pic {
+            margin-right: 15px;
+            margin-left: 0;
+        }
+
+        main article div.messages.you {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        main article div.messages.you p {
+            background: #104dc7;
+            color: #FFF;
+            text-align: right;
+            border-bottom-right-radius: 0;
+        }
+
+        footer {
+            width: 100%;
+            height: auto;
+            padding: 10px 30px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        footer input {
+            flex: 1;
+            height: 40px;
+            padding: 5px 15px;
+            border: solid 1px #CCC;
+            border-radius: 5px;
+        }
+
+        footer i {
+            color: #104dc7;
+            font-size: 20px;
+            margin-left: 25px;
+            cursor: pointer;
+        }
+    </style>
+
+    <title>Chat Socket.io</title>
+</head>
+
+<body>
+    <aside>
+        <i class="fas fa-bars"></i>
+        <i class="fas fa-sign-out-alt" id="logout"></i>
+    </aside>
+
+    <main>
+        <header>
+            <h1 id="username">Sala</h1>
+
+            <div class="badges">
+                <i class="far fa-bell"></i>
+                <div class="user">
+                    <p>username</p>
+                    <img src="https://thispersondoesnotexist.com/image" class="profile-pic" />
+                </div>
+            </div>
+        </header>
+
+        <article class="messages" id="messages">
+            <div class="new_message" id="new_message">
+                <label id="form-label">
+                    <div class="date">07 de setembro de 2021</div>
+                </label>
+            </div>
+            
+        </article>
+
+        <footer>
+            <input type="text" name="message_field" id="message_field" placeholder="Escreva uma mensagem..." />
+            <i class="fas fa-paper-plane"></i>
+        </footer>
+    </main>
+
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="chat.js"></script>
+
+    <script>
+        const dateDiv = document.querySelector('article div.date');
+        dateDiv.innerHTML = dayjs(new Date()).format('DD xx MMMM xx YYYY').replaceAll('xx', 'de');
+    </script>
+</body>
+</html>
